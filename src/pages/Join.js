@@ -81,13 +81,13 @@ export default function Join() {
   const { token } = useParams();
   const { user } = useParams();
 
-  const handleClickShowPassword1 = () => setShowPassword1(show => !show);
-  const handleClickShowPassword2 = () => setShowPassword2(show => !show);
-  const handleMouseDownPassword = event => {
+  const handleClickShowPassword1 = () => setShowPassword1((show) => !show);
+  const handleClickShowPassword2 = () => setShowPassword2((show) => !show);
+  const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
-  const handleUpload = async event => {
+  const handleUpload = async (event) => {
     const file = event.target.files[0];
     const fileName = email + "/" + file.name;
 
@@ -100,7 +100,9 @@ export default function Join() {
           email: email,
           filename: fileName,
         };
-        const result = await API.graphql(graphqlOperation(createAttachments, { input: userUpload }));
+        const result = await API.graphql(
+          graphqlOperation(createAttachments, { input: userUpload })
+        );
         if (result) {
           console.log(stored);
         }
@@ -141,11 +143,13 @@ export default function Join() {
       };
 
       await Auth.signIn(user, token)
-        .then(user => {
+        .then((user) => {
           if (user.challengeName === "NEW_PASSWORD_REQUIRED") {
             Auth.completeNewPassword(user, password1)
-              .then(async user => {
-                const result = await API.graphql(graphqlOperation(createUsers, { input: createUserInput }));
+              .then(async (user) => {
+                const result = await API.graphql(
+                  graphqlOperation(createUsers, { input: createUserInput })
+                );
                 if (result) {
                   setLoading(false);
                   localStorage.setItem("user", email);
@@ -155,12 +159,12 @@ export default function Join() {
                   alert("Errore nella registrazione della nuova utenza.");
                 }
               })
-              .catch(e => {
+              .catch((e) => {
                 console.log(e);
               });
           }
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     }
@@ -240,14 +244,21 @@ export default function Join() {
           </center>
 
           <Typography variant="subtitle2" marginTop={2}>
-            In questa pagina puoi registrare il tuo indirizzo email al portale B-Energy S.p.A. I campi contrassegnati con un asterisco sono obbligatori. La password deve soddisfare i seguenti
-            requisiti: lunghezza minima di <b>8 caratteri</b>, almeno <b>una maiuscola</b>, almeno <b>un numero</b> e almeno <b>un carattere speciale</b> (ad es. <b>!@#$%&*+-/=?._</b>).
+            In questa pagina puoi registrare il tuo indirizzo email al portale
+            B-Energy S.p.A. I campi contrassegnati con un asterisco sono
+            obbligatori. La password deve soddisfare i seguenti requisiti:
+            lunghezza minima di <b>8 caratteri</b>, almeno <b>una maiuscola</b>,
+            almeno <b>un numero</b> e almeno <b>un carattere speciale</b> (ad
+            es. <b>!@#$%&*+-/=?._</b>).
           </Typography>
 
           <Divider sx={{ mt: 4 }} />
 
           <Box sx={{ mt: 3 }}>
-            <Alert severity="error" sx={{ width: "100%", mb: 2, ...(!error && { display: "none" }) }}>
+            <Alert
+              severity="error"
+              sx={{ width: "100%", mb: 2, ...(!error && { display: "none" }) }}
+            >
               Verificare le informazioni inserite.
             </Alert>
             <Stepper activeStep={activeStep} orientation="vertical">
@@ -256,29 +267,77 @@ export default function Join() {
                 <StepContent>
                   <Grid container spacing={2} justifyContent={"center"}>
                     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                      <TextField required fullWidth id="ragioneSociale" label="Ragione Sociale" value={ragioneSociale} onChange={e => setRagioneSociale(e.target.value)} error={ragioneSocialeErr} />
+                      <TextField
+                        required
+                        fullWidth
+                        id="ragioneSociale"
+                        label="Ragione Sociale"
+                        value={ragioneSociale}
+                        onChange={(e) => setRagioneSociale(e.target.value)}
+                        error={ragioneSocialeErr}
+                      />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                      <TextField required fullWidth id="sedeLegale" label="Sede Legale" value={sedeLegale} onChange={e => setSedeLegale(e.target.value)} error={sedeLegaleErr} />
+                      <TextField
+                        required
+                        fullWidth
+                        id="sedeLegale"
+                        label="Sede Legale"
+                        value={sedeLegale}
+                        onChange={(e) => setSedeLegale(e.target.value)}
+                        error={sedeLegaleErr}
+                      />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                      <TextField required fullWidth id="codiceFiscale" value={codiceFiscale} label="Codice Fiscale" onChange={e => setCodiceFiscale(e.target.value)} error={codiceFiscaleErr} />
+                      <TextField
+                        required
+                        fullWidth
+                        id="codiceFiscale"
+                        value={codiceFiscale}
+                        label="Codice Fiscale"
+                        onChange={(e) => setCodiceFiscale(e.target.value)}
+                        error={codiceFiscaleErr}
+                      />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                      <TextField required fullWidth id="partitaIva" label="Partita IVA" value={partitaIva} onChange={e => setPartitaIva(e.target.value)} error={partitaIvaErr} />
+                      <TextField
+                        required
+                        fullWidth
+                        id="partitaIva"
+                        label="Partita IVA"
+                        value={partitaIva}
+                        onChange={(e) => setPartitaIva(e.target.value)}
+                        error={partitaIvaErr}
+                      />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                      <TextField required fullWidth id="referente" label="Referente" value={referente} onChange={e => setReferente(e.target.value)} error={referenteErr} />
+                      <TextField
+                        required
+                        fullWidth
+                        id="referente"
+                        label="Referente"
+                        value={referente}
+                        onChange={(e) => setReferente(e.target.value)}
+                        error={referenteErr}
+                      />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                      <TextField required fullWidth id="ruolo" label="Ruolo" value={ruolo} onChange={e => setRuolo(e.target.value)} error={ruoloErr} />
+                      <TextField
+                        required
+                        fullWidth
+                        id="ruolo"
+                        label="Ruolo"
+                        value={ruolo}
+                        onChange={(e) => setRuolo(e.target.value)}
+                        error={ruoloErr}
+                      />
                     </Grid>
                     <Grid item xs={10} sm={12} md={6} lg={6} xl={6}>
                       <PhoneInput
                         countryCodeEditable={"false"}
                         country="it"
                         value={telefono}
-                        onChange={phone => setTelefono(phone)}
+                        onChange={(phone) => setTelefono(phone)}
                         specialLabel={"Telefono"}
                         inputStyle={{ width: "100%", height: "56px" }}
                         localization={"it"}
@@ -288,7 +347,10 @@ export default function Join() {
                       <TextField disabled fullWidth id="email" value={email} />
                     </Grid>
                   </Grid>
-                  <Box mt={2} sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  <Box
+                    mt={2}
+                    sx={{ display: "flex", justifyContent: "flex-end" }}
+                  >
                     <Button
                       variant="contained"
                       color="primary"
@@ -301,7 +363,8 @@ export default function Join() {
                           setError(true);
                         }
                       }}
-                      disabled={activeStep === 2}>
+                      disabled={activeStep === 2}
+                    >
                       Avanti
                     </Button>
                   </Box>
@@ -312,12 +375,43 @@ export default function Join() {
                 <StepContent>
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                      <FormControlLabel control={<Checkbox required id="produttore" color="primary" onChange={() => setProduttore(!produttore)} />} label="Produttore" />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            required
+                            id="produttore"
+                            color="primary"
+                            onChange={() => setProduttore(!produttore)}
+                          />
+                        }
+                        label="Produttore"
+                      />
                     </Grid>
+                    
+                    
+                    
+                    
+                    
                     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                      <FormControlLabel control={<Checkbox required id="conferitore" color="primary" onChange={() => setConferitore(!conferitore)} />} label="Conferitore" />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            required
+                            id="conferitore"
+                            color="primary"
+                            onChange={() => setConferitore(!conferitore)}
+                          />
+                        }
+                        label="Conferitore"
+                      />
                     </Grid>
+                    
+                    
+                    
+                    
                     <Grid item xs={12}>
+                    
+                    
                       <Accordion disabled={!conferitore}>
                         <AccordionSummary>
                           <Typography>1. Iscrizione A.N.G.A.</Typography>
@@ -329,13 +423,14 @@ export default function Join() {
                               labelId="anga1cat"
                               label="Cat."
                               value={anga1[0]}
-                              onChange={e => {
-                                setAnga1(prevArray => {
+                              onChange={(e) => {
+                                setAnga1((prevArray) => {
                                   const newArray = [...prevArray];
                                   newArray[0] = e.target.value;
                                   return newArray;
                                 });
-                              }}>
+                              }}
+                            >
                               <MenuItem value={"4"}>4</MenuItem>
                               <MenuItem value={"5"}>5</MenuItem>
                               <MenuItem value={"4-5"}>4-5</MenuItem>
@@ -344,8 +439,8 @@ export default function Join() {
                           <FormControl sx={{ m: 1, maxWidth: 150 }}>
                             <TextField
                               label="Numero"
-                              onChange={e => {
-                                setAnga1(prevArray => {
+                              onChange={(e) => {
+                                setAnga1((prevArray) => {
                                   const newArray = [...prevArray];
                                   newArray[1] = e.target.value;
                                   return newArray;
@@ -359,14 +454,16 @@ export default function Join() {
                                 label="Data"
                                 inputFormat="DD/MM/YYYY"
                                 value={anga1[2]}
-                                onChange={e => {
-                                  setAnga1(prevArray => {
+                                onChange={(e) => {
+                                  setAnga1((prevArray) => {
                                     const newArray = [...prevArray];
                                     newArray[2] = e;
                                     return newArray;
                                   });
                                 }}
-                                renderInput={params => <TextField {...params} />}
+                                renderInput={(params) => (
+                                  <TextField {...params} />
+                                )}
                               />
                             </LocalizationProvider>
                           </FormControl>
@@ -375,8 +472,8 @@ export default function Join() {
                               id="att1"
                               type={"file"}
                               value={anga1[3]}
-                              onChange={e => {
-                                setAnga1(prevArray => {
+                              onChange={(e) => {
+                                setAnga1((prevArray) => {
                                   const newArray = [...prevArray];
                                   newArray[3] = e.target.files[0].name;
                                   return newArray;
@@ -388,13 +485,14 @@ export default function Join() {
                                   <InputAdornment position="end">
                                     <IconButton
                                       sx={{}}
-                                      onClick={e => {
-                                        setAnga1(prevArray => {
+                                      onClick={(e) => {
+                                        setAnga1((prevArray) => {
                                           const newArray = [...prevArray];
                                           newArray[3] = "";
                                           return newArray;
                                         });
-                                      }}>
+                                      }}
+                                    >
                                       <ClearIcon />
                                     </IconButton>
                                   </InputAdornment>
@@ -417,13 +515,14 @@ export default function Join() {
                               labelId="anga2cat"
                               label="Cat."
                               value={anga2[0]}
-                              onChange={e => {
-                                setAnga2(prevArray => {
+                              onChange={(e) => {
+                                setAnga2((prevArray) => {
                                   const newArray = [...prevArray];
                                   newArray[0] = e.target.value;
                                   return newArray;
                                 });
-                              }}>
+                              }}
+                            >
                               <MenuItem value={"4"}>4</MenuItem>
                               <MenuItem value={"5"}>5</MenuItem>
                               <MenuItem value={"4-5"}>4-5</MenuItem>
@@ -432,8 +531,8 @@ export default function Join() {
                           <FormControl sx={{ m: 1, maxWidth: 150 }}>
                             <TextField
                               label="Numero"
-                              onChange={e => {
-                                setAnga2(prevArray => {
+                              onChange={(e) => {
+                                setAnga2((prevArray) => {
                                   const newArray = [...prevArray];
                                   newArray[1] = e.target.value;
                                   return newArray;
@@ -447,14 +546,16 @@ export default function Join() {
                                 label="Data"
                                 inputFormat="DD/MM/YYYY"
                                 value={anga2[2]}
-                                onChange={e => {
-                                  setAnga2(prevArray => {
+                                onChange={(e) => {
+                                  setAnga2((prevArray) => {
                                     const newArray = [...prevArray];
                                     newArray[2] = e;
                                     return newArray;
                                   });
                                 }}
-                                renderInput={params => <TextField {...params} />}
+                                renderInput={(params) => (
+                                  <TextField {...params} />
+                                )}
                               />
                             </LocalizationProvider>
                           </FormControl>
@@ -463,8 +564,8 @@ export default function Join() {
                               id="att2"
                               type={"file"}
                               value={anga2[3]}
-                              onChange={e => {
-                                setAnga2(prevArray => {
+                              onChange={(e) => {
+                                setAnga2((prevArray) => {
                                   const newArray = [...prevArray];
                                   newArray[3] = e.target.files[0].name;
                                   return newArray;
@@ -484,7 +585,14 @@ export default function Join() {
                     </Grid>
                     <Grid item xs={12}>
                       <FormControlLabel
-                        control={<Checkbox required id="intermediarioCommerciale" color="primary" onChange={() => setIntermediario(!intermediario)} />}
+                        control={
+                          <Checkbox
+                            required
+                            id="intermediarioCommerciale"
+                            color="primary"
+                            onChange={() => setIntermediario(!intermediario)}
+                          />
+                        }
                         label="Intermediario Commerciale"
                       />
                     </Grid>
@@ -500,13 +608,14 @@ export default function Join() {
                               labelId="anga3cat"
                               label="Cat."
                               value={anga3[0]}
-                              onChange={e => {
-                                setAnga3(prevArray => {
+                              onChange={(e) => {
+                                setAnga3((prevArray) => {
                                   const newArray = [...prevArray];
                                   newArray[0] = e.target.value;
                                   return newArray;
                                 });
-                              }}>
+                              }}
+                            >
                               <MenuItem value={"4"}>4</MenuItem>
                               <MenuItem value={"5"}>5</MenuItem>
                               <MenuItem value={"4-5"}>4-5</MenuItem>
@@ -515,8 +624,8 @@ export default function Join() {
                           <FormControl sx={{ m: 1, maxWidth: 150 }}>
                             <TextField
                               label="Numero"
-                              onChange={e => {
-                                setAnga3(prevArray => {
+                              onChange={(e) => {
+                                setAnga3((prevArray) => {
                                   const newArray = [...prevArray];
                                   newArray[1] = e.target.value;
                                   return newArray;
@@ -530,14 +639,16 @@ export default function Join() {
                                 label="Data"
                                 inputFormat="DD/MM/YYYY"
                                 value={anga3[2]}
-                                onChange={e => {
-                                  setAnga3(prevArray => {
+                                onChange={(e) => {
+                                  setAnga3((prevArray) => {
                                     const newArray = [...prevArray];
                                     newArray[2] = e;
                                     return newArray;
                                   });
                                 }}
-                                renderInput={params => <TextField {...params} />}
+                                renderInput={(params) => (
+                                  <TextField {...params} />
+                                )}
                               />
                             </LocalizationProvider>
                           </FormControl>
@@ -546,8 +657,8 @@ export default function Join() {
                               id="att3"
                               type={"file"}
                               value={anga3[3]}
-                              onChange={e => {
-                                setAnga3(prevArray => {
+                              onChange={(e) => {
+                                setAnga3((prevArray) => {
                                   const newArray = [...prevArray];
                                   newArray[3] = e.target.files[0].name;
                                   return newArray;
@@ -566,8 +677,18 @@ export default function Join() {
                       </Accordion>
                     </Grid>
                   </Grid>
-                  <Box mt={2} sx={{ display: "flex", justifyContent: "flex-end" }}>
-                    <Button onClick={() => setActiveStep(activeStep - 1)} disabled={activeStep === 0} sx={{ mr: 1 }}>
+                  
+                  
+                  
+                  <Box
+                    mt={2}
+                    sx={{ display: "flex", justifyContent: "flex-end" }}
+                  >
+                    <Button
+                      onClick={() => setActiveStep(activeStep - 1)}
+                      disabled={activeStep === 0}
+                      sx={{ mr: 1 }}
+                    >
                       Indietro
                     </Button>
                     <Button
@@ -582,7 +703,8 @@ export default function Join() {
                           setError(true);
                         }
                       }}
-                      disabled={activeStep === 2}>
+                      disabled={activeStep === 2}
+                    >
                       Avanti
                     </Button>
                   </Box>
@@ -600,12 +722,19 @@ export default function Join() {
                         id="password"
                         placeholder="Password"
                         type={showPassword1 ? "text" : "password"}
-                        onChange={e => setPassword1(e.target.value)}
+                        onChange={(e) => setPassword1(e.target.value)}
                         error={password1Err}
                         endAdornment={
                           <InputAdornment position="end">
-                            <IconButton onClick={handleClickShowPassword1} onMouseDown={handleMouseDownPassword}>
-                              {showPassword1 ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                            <IconButton
+                              onClick={handleClickShowPassword1}
+                              onMouseDown={handleMouseDownPassword}
+                            >
+                              {showPassword1 ? (
+                                <VisibilityOffIcon />
+                              ) : (
+                                <VisibilityIcon />
+                              )}
                             </IconButton>
                           </InputAdornment>
                         }
@@ -618,23 +747,40 @@ export default function Join() {
                         id="confirmPassword"
                         placeholder="Conferma Password"
                         type={showPassword2 ? "text" : "password"}
-                        onChange={e => setPassword2(e.target.value)}
+                        onChange={(e) => setPassword2(e.target.value)}
                         error={password2Err}
                         endAdornment={
                           <InputAdornment position="end">
-                            <IconButton onClick={handleClickShowPassword2} onMouseDown={handleMouseDownPassword}>
-                              {showPassword2 ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                            <IconButton
+                              onClick={handleClickShowPassword2}
+                              onMouseDown={handleMouseDownPassword}
+                            >
+                              {showPassword2 ? (
+                                <VisibilityOffIcon />
+                              ) : (
+                                <VisibilityIcon />
+                              )}
                             </IconButton>
                           </InputAdornment>
                         }
                       />
                     </Grid>
                   </Grid>
-                  <Box mt={2} sx={{ display: "flex", justifyContent: "flex-end" }}>
-                    <Button onClick={() => setActiveStep(activeStep - 1)} sx={{ mr: 1 }}>
+                  <Box
+                    mt={2}
+                    sx={{ display: "flex", justifyContent: "flex-end" }}
+                  >
+                    <Button
+                      onClick={() => setActiveStep(activeStep - 1)}
+                      sx={{ mr: 1 }}
+                    >
                       Indietro
                     </Button>
-                    <Button variant="contained" color="primary" onClick={() => signUp()}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => signUp()}
+                    >
                       Registrati
                     </Button>
                   </Box>
